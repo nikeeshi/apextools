@@ -1,23 +1,19 @@
 {
   "files": {
-    "main.css": "/apextools/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/apextools/static/js/main.77026b47.chunk.js",
-    "main.js.map": "/apextools/static/js/main.77026b47.chunk.js.map",
-    "runtime-main.js": "/apextools/static/js/runtime-main.48489f6c.js",
-    "runtime-main.js.map": "/apextools/static/js/runtime-main.48489f6c.js.map",
-    "static/js/2.67165798.chunk.js": "/apextools/static/js/2.67165798.chunk.js",
-    "static/js/2.67165798.chunk.js.map": "/apextools/static/js/2.67165798.chunk.js.map",
-    "static/js/3.7ac56553.chunk.js": "/apextools/static/js/3.7ac56553.chunk.js",
-    "static/js/3.7ac56553.chunk.js.map": "/apextools/static/js/3.7ac56553.chunk.js.map",
+    "main.js": "/apextools/static/js/main.835d0530.chunk.js",
+    "main.js.map": "/apextools/static/js/main.835d0530.chunk.js.map",
+    "runtime-main.js": "/apextools/static/js/runtime-main.d542cfcc.js",
+    "runtime-main.js.map": "/apextools/static/js/runtime-main.d542cfcc.js.map",
+    "static/js/2.c52847a1.chunk.js": "/apextools/static/js/2.c52847a1.chunk.js",
+    "static/js/2.c52847a1.chunk.js.map": "/apextools/static/js/2.c52847a1.chunk.js.map",
+    "static/js/3.4dd15327.chunk.js": "/apextools/static/js/3.4dd15327.chunk.js",
+    "static/js/3.4dd15327.chunk.js.map": "/apextools/static/js/3.4dd15327.chunk.js.map",
     "index.html": "/apextools/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/apextools/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.67165798.chunk.js.LICENSE.txt": "/apextools/static/js/2.67165798.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/apextools/static/media/logo.6ce24c58.svg"
+    "static/js/2.c52847a1.chunk.js.LICENSE.txt": "/apextools/static/js/2.c52847a1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.48489f6c.js",
-    "static/js/2.67165798.chunk.js",
-    "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.77026b47.chunk.js"
+    "static/js/runtime-main.d542cfcc.js",
+    "static/js/2.c52847a1.chunk.js",
+    "static/js/main.835d0530.chunk.js"
   ]
 }
