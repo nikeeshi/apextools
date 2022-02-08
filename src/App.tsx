@@ -1,97 +1,75 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { DropDownMenu } from "./component/dropdownmenu";
+import { Tiers } from "./data";
+import { calcRP, Tier } from "./rpCalculator";
+import { range } from "./util/range";
 function Inputs({
-  rank,
-  setRank,
-  kp,
+  placement,
+  setPlacement,
+  killpoint,
   setKP,
   tier,
   setTier,
 }: {
-  rank: number | null;
-  setRank: Dispatch<SetStateAction<number | null>>;
-  kp: number | null;
+  placement: number | null;
+  setPlacement: Dispatch<SetStateAction<number | null>>;
+  killpoint: number | null;
   setKP: Dispatch<SetStateAction<number | null>>;
-  tier: number | null;
-  setTier: Dispatch<SetStateAction<number | null>>;
+  tier: Tier | null;
+  setTier: Dispatch<SetStateAction<Tier | null>>;
 }) {
   return (
     <div>
-      <label>
-        Rank
-        <input
-          type="number"
-          min="1"
-          max="20"
-          step="1"
-          value={rank ?? ""}
-          onChange={(e) =>
-            setRank(
-              e.target.value === null ? null : parseInt(e.target.value, 10)
-            )
+      <div>
+        <DropDownMenu
+          label="Placement"
+          setter={(placement) =>
+            setPlacement(parseInt(placement, 10))
           }
+          list={range(1, 20).map((v) => String(v))}
         />
-      </label>
-      <label>
-        Kill/Assist Point
-        <input
-          type="number"
-          min="0"
-          max="20"
-          step="1"
-          value={kp ?? ""}
-          onChange={(e) =>
-            setKP(e.target.value === null ? null : parseInt(e.target.value, 10))
+      </div>
+      <div>
+        
+      <DropDownMenu
+          label="Kill/Assist Point"
+          setter={(killpoint) =>
+            setKP(parseInt(killpoint, 10))
           }
+          list={range(0, 20).map((v) => String(v))}
         />
-      </label>
-      <label>
-        Tier
-        <input
-          type="number"
-          min="0"
-          max="4"
-          step="1"
-          value={tier ?? ""}
-          onChange={(e) =>
-            setTier(
-              e.target.value === null ? null : parseInt(e.target.value, 10)
-            )
-          }
+      </div>
+      <div>
+        <DropDownMenu
+          label="Tier"
+          setter={(tier) => setTier(tier)}
+          list={Tiers}
         />
-      </label>
+      </div>
     </div>
   );
 }
 
 function Output({
-  rank,
-  kp,
+  placement,
+  killpoint: killPoint,
   tier,
 }: {
-  rank: number | null;
-  kp: number | null;
-  tier: number | null;
+  placement: number | null;
+  killpoint: number | null;
+  tier: Tier | null;
 }) {
-  if (rank !== null && kp !== null && tier !== null) {
-    const rpFromPlacement =
-      rank > 13
-        ? 0
-        : rank > 10
-        ? 5
-        : rank > 8
-        ? 10
-        : rank > 6
-        ? 20
-        : rank > 4
-        ? 30
-        : rank > 2
-        ? 40
-        : rank > 1
-        ? 60
-        : 100;
-    const rpPerKill =
-      rank > 10 ? 10 : rank > 5 ? 12 : rank > 3 ? 15 : rank > 1 ? 20 : 25;
-    const totalRP = rpFromPlacement + Math.min(rpPerKill * kp, 175);
+  if (
+    placement !== null &&
+    killPoint !== null &&
+    tier !== null
+  ) {
+    const totalRP = calcRP({
+      placement,
+      killPoint,
+      tier,
+      lostForgiveness: false, //TODO 後でなおす
+    });
     return (
       <div>
         <label>Total RP: {totalRP}</label>
@@ -101,20 +79,26 @@ function Output({
   return null;
 }
 function App() {
-  const [rank, setRank] = useState<number | null>(null);
-  const [kp, setKP] = useState<number | null>(null);
-  const [tier, setTier] = useState<number | null>(null);
+  const [placement, setRank] = useState<number | null>(
+    null
+  );
+  const [killpoint, setKP] = useState<number | null>(null);
+  const [tier, setTier] = useState<Tier | null>(null);
   return (
     <div>
       <Inputs
-        rank={rank}
-        setRank={setRank}
-        kp={kp}
+        placement={placement}
+        setPlacement={setRank}
+        killpoint={killpoint}
         setKP={setKP}
         tier={tier}
         setTier={setTier}
       />
-      <Output rank={rank} kp={kp} tier={tier} />
+      <Output
+        placement={placement}
+        killpoint={killpoint}
+        tier={tier}
+      />
     </div>
   );
 }
