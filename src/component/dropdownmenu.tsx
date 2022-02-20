@@ -1,21 +1,29 @@
+import { ValueSetterPair } from "../variable/valueSetterPair";
+
 type Props<Item extends string> = {
   label: string;
   list: readonly Item[];
-  setter: (item: Item) => void;
+  selected: ValueSetterPair<Item>;
 };
 export function DropDownMenu<Item extends string>({
   label,
-  setter,
+  selected,
   list,
 }: Props<Item>) {
+  const [selectedItem, select] = selected;
   return (
     <label>
-      {label}
+      {label}{" "}
       <select
-        onChange={(e) => setter(e.target.value as Item)}
+        onChange={(e) => select(e.target.value as Item)}
       >
         {list.map((item) => (
-          <option value={item}>{item}</option>
+          <option
+            value={item}
+            selected={item === selectedItem}
+          >
+            {item}
+          </option>
         ))}
       </select>
     </label>

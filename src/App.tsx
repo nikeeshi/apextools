@@ -1,49 +1,62 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { DropDownMenu } from "./component/dropdownmenu";
+import { useState } from "react";
+import { DropDownMenu } from "./component/dropDownMenu";
+import { OnOffToggle } from "./component/OnOffToggle";
 import { Tiers } from "./data";
 import { calcRP, Tier } from "./rpCalculator";
 import { range } from "./util/range";
+import {
+  applyFnToVSPair,
+  ValueSetterPair,
+} from "./variable/valueSetterPair";
 function Inputs({
   placement,
-  setPlacement,
   killpoint,
-  setKP,
   tier,
-  setTier,
+  lostForgiveness,
 }: {
-  placement: number | null;
-  setPlacement: Dispatch<SetStateAction<number | null>>;
-  killpoint: number | null;
-  setKP: Dispatch<SetStateAction<number | null>>;
-  tier: Tier | null;
-  setTier: Dispatch<SetStateAction<Tier | null>>;
+  placement: ValueSetterPair<number>;
+  killpoint: ValueSetterPair<number>;
+  tier: ValueSetterPair<Tier>;
+  lostForgiveness: ValueSetterPair<boolean>;
 }) {
+  const placementStr = applyFnToVSPair(
+    placement,
+    (v) => String(v),
+    (str) => parseInt(str, 10)
+  );
+
+  const killpointStr = applyFnToVSPair(
+    killpoint,
+    (v) => String(v),
+    (str) => parseInt(str, 10)
+  );
   return (
     <div>
       <div>
         <DropDownMenu
+          selected={placementStr}
           label="Placement"
-          setter={(placement) =>
-            setPlacement(parseInt(placement, 10))
-          }
           list={range(1, 20).map((v) => String(v))}
         />
       </div>
       <div>
-        
-      <DropDownMenu
+        <DropDownMenu
+          selected={killpointStr}
           label="Kill/Assist Point"
-          setter={(killpoint) =>
-            setKP(parseInt(killpoint, 10))
-          }
           list={range(0, 20).map((v) => String(v))}
         />
       </div>
       <div>
         <DropDownMenu
+          selected={tier}
           label="Tier"
-          setter={(tier) => setTier(tier)}
           list={Tiers}
+        />
+      </div>
+      <div>
+        <OnOffToggle
+          current={lostForgiveness}
+          label="Lost Forgiveness"
         />
       </div>
     </div>
@@ -54,50 +67,43 @@ function Output({
   placement,
   killpoint: killPoint,
   tier,
+  lostForgiveness,
 }: {
-  placement: number | null;
-  killpoint: number | null;
-  tier: Tier | null;
+  placement: number;
+  killpoint: number;
+  tier: Tier;
+  lostForgiveness: boolean;
 }) {
-  if (
-    placement !== null &&
-    killPoint !== null &&
-    tier !== null
-  ) {
-    const totalRP = calcRP({
-      placement,
-      killPoint,
-      tier,
-      lostForgiveness: false, //TODO 後でなおす
-    });
-    return (
-      <div>
-        <label>Total RP: {totalRP}</label>
-      </div>
-    );
-  }
-  return null;
+  const totalRP = calcRP({
+    placement,
+    killPoint,
+    tier,
+    lostForgiveness,
+  });
+  return (
+    <div>
+      <label>Total RP: {totalRP}</label>
+    </div>
+  );
 }
 function App() {
-  const [placement, setRank] = useState<number | null>(
-    null
-  );
-  const [killpoint, setKP] = useState<number | null>(null);
-  const [tier, setTier] = useState<Tier | null>(null);
+  const placement = useState<number>(1);
+  const killpoint = useState<number>(0);
+  const tier = useState<Tier>(Tiers[0]);
+  const lostForgiveness = useState<boolean>(false);
   return (
     <div>
       <Inputs
         placement={placement}
-        setPlacement={setRank}
         killpoint={killpoint}
-        setKP={setKP}
         tier={tier}
-        setTier={setTier}
+        lostForgiveness={lostForgiveness}
       />
       <Output
-        placement={placement}
-        killpoint={killpoint}
-        tier={tier}
+        placement={placement[0]}
+        killpoint={killpoint[0]}
+        tier={tier[0]}
+        lostForgiveness={lostForgiveness[0]}
       />
     </div>
   );
