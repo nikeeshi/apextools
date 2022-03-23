@@ -1,9 +1,9 @@
-import { ValueSetterPair } from "../variable/valueSetterPair";
+import { ValueSetterPair } from "../../variable/valueSetterPair";
 
 type Props<Item extends string> = {
   label: string;
-  list: readonly Item[];
-  selected: ValueSetterPair<Item>;
+  list: readonly (Item|null)[];
+  selected: ValueSetterPair<Item | null>;
 };
 export function DropDownMenu<Item extends string>({
   label,
@@ -15,14 +15,17 @@ export function DropDownMenu<Item extends string>({
     <label>
       {label}{" "}
       <select
-        onChange={(e) => select(e.target.value as Item)}
+        onChange={(e) => {
+          if (e.target.value === "") select(null);
+          else select(e.target.value as Item);
+        }}
       >
         {list.map((item) => (
           <option
-            value={item}
+            value={item??""}
             selected={item === selectedItem}
           >
-            {item}
+            {item??"---"}
           </option>
         ))}
       </select>

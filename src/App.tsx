@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { DropDownMenu } from "./component/DropDownMenu";
 import { OnOffToggle } from "./component/OnOffToggle";
+import { RadioStyleSelector } from "./component/RadioStyleSelector";
 import { Tiers } from "./data";
 import { calcRP, Tier } from "./rpCalculator";
 import { range } from "./util/range";
@@ -33,21 +33,21 @@ function Inputs({
   return (
     <div>
       <div>
-        <DropDownMenu
+        <RadioStyleSelector
           selected={placementStr}
           label="Placement"
           list={range(1, 20).map((v) => String(v))}
         />
       </div>
       <div>
-        <DropDownMenu
+        <RadioStyleSelector
           selected={killpointStr}
           label="Kill/Assist Point"
           list={range(0, 20).map((v) => String(v))}
         />
       </div>
       <div>
-        <DropDownMenu
+        <RadioStyleSelector
           selected={tier}
           label="Tier"
           list={Tiers}
