@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DropDownMenu } from "./component/dropDownMenu";
+import { DropDownMenu } from "./component/DropDownMenu";
 import { OnOffToggle } from "./component/OnOffToggle";
 import { Tiers } from "./data";
 import { calcRP, Tier } from "./rpCalculator";
