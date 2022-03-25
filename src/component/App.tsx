@@ -6,7 +6,6 @@ import { Tiers } from "../data";
 import { calcRP, Tier } from "../rpCalculator";
 import { range } from "../util/range";
 import {
-  applyFnToVSPair,
   ValueSetterPair,
 } from "../variable/valueSetterPair";
 import LanguageSwitch from "./LanguageSwitch";
@@ -22,31 +21,23 @@ function Inputs({
   lostForgiveness: ValueSetterPair<boolean>;
 }) {
   const { t } = useTranslation();
-  const placementStr = applyFnToVSPair(
-    placement,
-    (v) => String(v),
-    (str) => parseInt(str, 10)
-  );
 
-  const killPointStr = applyFnToVSPair(
-    killPoint,
-    (v) => String(v),
-    (str) => parseInt(str, 10)
-  );
   return (
     <div>
       <div>
         <RadioStyleSelector
-          selected={placementStr}
+          selected={placement}
           label={t("Placement")}
-          list={range(1, 20).map((v) => String(v))}
+          list={range(1, 20)}
+          itemLabel={(a) => String(a)}
         />
       </div>
       <div>
         <RadioStyleSelector
-          selected={killPointStr}
+          selected={killPoint}
           label={t("Kill/Assist Point")}
-          list={range(0, 20).map((v) => String(v))}
+          list={range(0, 20)}
+          itemLabel={(a) => String(a)}
         />
       </div>
       <div>
@@ -54,6 +45,7 @@ function Inputs({
           selected={tier}
           label={t("Tier")}
           list={Tiers}
+          itemLabel={(a) => t(a)}
         />
       </div>
       <div>

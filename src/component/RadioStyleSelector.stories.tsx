@@ -4,7 +4,10 @@ import {
   ComponentMeta,
 } from "@storybook/react";
 
-import { RadioStyleSelector } from "./RadioStyleSelector";
+import {
+  RadioStyleSelector,
+  RadioStyleSelectorProps,
+} from "./RadioStyleSelector";
 
 export default {
   component: RadioStyleSelector,
@@ -16,9 +19,9 @@ export default {
   },
 } as ComponentMeta<typeof RadioStyleSelector>;
 
-const Template: ComponentStory<
-  typeof RadioStyleSelector
-> = (args) => {
+const Template: any = (
+  args: RadioStyleSelectorProps<string>
+) => {
   const selected = useState<string>(args.list[0]);
   return (
     <div>
@@ -33,4 +36,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   label: "Button",
   list: ["1", "2", "3"],
+  itemLabel: (a: string) => a,
 };

@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import {
-  jsx,
-} from "@emotion/react/macro";
+import { jsx } from "@emotion/react/macro";
 import { ValueSetterPair } from "../variable/valueSetterPair";
 
-type Props<Candidates extends readonly string[]> = {
+export type RadioStyleSelectorProps<Item> = {
   label: string;
-  list: Candidates;
-  selected: ValueSetterPair<Candidates[number]>;
+  list: readonly Item[];
+  selected: ValueSetterPair<Item>;
+  itemLabel: (i: Item) => string;
 };
 type RadioStyleSelectorOptionProps = {
   onClick: () => void;
@@ -35,22 +34,25 @@ export function RadioStyleSelectorOption({
     </button>
   );
 }
-export function RadioStyleSelector<
-  Candidates extends readonly string[]
->({ label, selected, list }: Props<Candidates>) {
+export function RadioStyleSelector<Item extends any>({
+  label,
+  selected,
+  list,
+  itemLabel,
+}: RadioStyleSelectorProps<Item>) {
   const [selectedItem, select] = selected;
   return (
     <label>
       {label}{" "}
       <div>
-        {list.map((item) => (
+        {list.map((item, index) => (
           <RadioStyleSelectorOption
             onClick={() => {
               select(item);
             }}
             selected={selectedItem === item}
-            label={item}
-            key={item}
+            label={itemLabel(item)}
+            key={index}
           />
         ))}
       </div>
