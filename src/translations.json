@@ -1,0 +1,22 @@
+{
+  "en": {
+    "translation": {
+      "Placement": "Placement",
+      "Kill/Assist Point": "Kill/Assist Point",
+      "Tier": "Tier",
+      "Lost Forgiveness": "Lost Forgiveness",
+      "Total RP": "Total RP",
+      "Apex Legends RP calculator": "Apex Legends RP calculator"
+    }
+  },
+  "ja": {
+    "translation": {
+      "Placement": "順位",
+      "Kill/Assist Point": "キルアシストポイント",
+      "Tier": "ランク",
+      "Lost Forgiveness": "敗北免除",
+      "Total RP": "合計RP",
+      "Apex Legends RP calculator": "エイペックスレジェンズ RP 計算機"
+    }
+  }
+}

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { OnOffToggle } from "./component/OnOffToggle";
-import { RadioStyleSelector } from "./component/RadioStyleSelector";
-import { Tiers } from "./data";
-import { calcRP, Tier } from "./rpCalculator";
-import { range } from "./util/range";
+import { useTranslation } from "react-i18next";
+import { OnOffToggle } from "./OnOffToggle";
+import { RadioStyleSelector } from "./RadioStyleSelector";
+import { Tiers } from "../data";
+import { calcRP, Tier } from "../rpCalculator";
+import { range } from "../util/range";
 import {
   applyFnToVSPair,
   ValueSetterPair,
-} from "./variable/valueSetterPair";
+} from "../variable/valueSetterPair";
 function Inputs({
   placement,
   killPoint,
@@ -19,6 +20,7 @@ function Inputs({
   tier: ValueSetterPair<Tier>;
   lostForgiveness: ValueSetterPair<boolean>;
 }) {
+  const { t, i18n } = useTranslation();
   const placementStr = applyFnToVSPair(
     placement,
     (v) => String(v),
@@ -35,28 +37,28 @@ function Inputs({
       <div>
         <RadioStyleSelector
           selected={placementStr}
-          label="Placement"
+          label={t("Placement")}
           list={range(1, 20).map((v) => String(v))}
         />
       </div>
       <div>
         <RadioStyleSelector
           selected={killPointStr}
-          label="Kill/Assist Point"
+          label={t("Kill/Assist Point")}
           list={range(0, 20).map((v) => String(v))}
         />
       </div>
       <div>
         <RadioStyleSelector
           selected={tier}
-          label="Tier"
+          label={t("Tier")}
           list={Tiers}
         />
       </div>
       <div>
         <OnOffToggle
           current={lostForgiveness}
-          label="Lost Forgiveness"
+          label={t("Lost Forgiveness")}
         />
       </div>
     </div>
@@ -74,6 +76,7 @@ function Output({
   tier: Tier;
   lostForgiveness: boolean;
 }) {
+  const { t } = useTranslation();
   const totalRP = calcRP({
     placement,
     killPoint,
@@ -82,17 +85,22 @@ function Output({
   });
   return (
     <div>
-      <label>Total RP: {totalRP}</label>
+      <label>
+        {t("Total RP") + ": "}
+        {totalRP}
+      </label>
     </div>
   );
 }
-function App() {
+export default function App() {
   const placement = useState<number>(1);
   const killPoint = useState<number>(0);
   const tier = useState<Tier>(Tiers[0]);
   const lostForgiveness = useState<boolean>(false);
+  const { t } = useTranslation();
   return (
     <div>
+      <h1>{t("Apex Legends RP calculator")}</h1>
       <Inputs
         placement={placement}
         killPoint={killPoint}
@@ -108,5 +116,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
