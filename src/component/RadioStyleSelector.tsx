@@ -1,3 +1,10 @@
+/** @jsxImportSource @emotion/react */
+import {
+  jsx,
+  css,
+  Global,
+  keyframes,
+} from "@emotion/react/macro";
 import { ValueSetterPair } from "../variable/valueSetterPair";
 
 type Props<Candidates extends readonly string[]> = {
@@ -10,6 +17,7 @@ type RadioStyleSelectorOptionProps = {
   selected: boolean;
   label: string;
 };
+
 export function RadioStyleSelectorOption({
   onClick,
   selected,
@@ -18,11 +26,12 @@ export function RadioStyleSelectorOption({
   return (
     <button
       onClick={onClick}
-      style={{
+      css={{
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: selected ? "#000000" : "#efefef",
         backgroundColor: "#efefef",
+        marginLeft: 0,
       }}
     >
       {label}
@@ -44,6 +53,7 @@ export function RadioStyleSelector<
             }}
             selected={selectedItem === item}
             label={item}
+            key={item}
           />
         ))}
       </div>
