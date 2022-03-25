@@ -6,17 +6,31 @@
       "Tier": "Tier",
       "Lost Forgiveness": "Lost Forgiveness",
       "Total RP": "Total RP",
-      "Apex Legends RP calculator": "Apex Legends RP calculator"
+      "Apex Legends RP calculator": "Apex Legends RP calculator",
+      "Bronze": "Bronze",
+      "Silver": "Silver",
+      "Gold": "Gold",
+      "Platinum": "Platinum",
+      "Diamond": "Diamond",
+      "Master": "Master",
+      "Apex Predator": "Apex Predator"
     }
   },
   "ja": {
     "translation": {
       "Placement": "順位",
       "Kill/Assist Point": "キルアシストポイント",
-      "Tier": "ランク",
+      "Tier": "ティア",
       "Lost Forgiveness": "敗北免除",
       "Total RP": "合計RP",
-      "Apex Legends RP calculator": "エイペックスレジェンズ RP 計算機"
+      "Apex Legends RP calculator": "エイペックスレジェンズ RP 計算機",
+      "Bronze": "ブロンズ",
+      "Silver": "シルバー",
+      "Gold": "ゴールド",
+      "Platinum": "プラチナ",
+      "Diamond": "ダイアモンド",
+      "Master": "マスター",
+      "Apex Predator": "Apexプレデター"
     }
   }
 }
