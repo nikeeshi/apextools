@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/apextools/static/js/main.ff5f70cc.chunk.js",
-    "main.js.map": "/apextools/static/js/main.ff5f70cc.chunk.js.map",
+    "main.js": "/apextools/static/js/main.effe9e31.chunk.js",
+    "main.js.map": "/apextools/static/js/main.effe9e31.chunk.js.map",
     "runtime-main.js": "/apextools/static/js/runtime-main.3bc58c55.js",
     "runtime-main.js.map": "/apextools/static/js/runtime-main.3bc58c55.js.map",
     "static/js/2.1487acf9.chunk.js": "/apextools/static/js/2.1487acf9.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.3bc58c55.js",
     "static/js/2.1487acf9.chunk.js",
-    "static/js/main.ff5f70cc.chunk.js"
+    "static/js/main.effe9e31.chunk.js"
   ]
 }
