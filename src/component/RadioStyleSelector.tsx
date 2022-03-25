@@ -1,9 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {
   jsx,
-  css,
-  Global,
-  keyframes,
 } from "@emotion/react/macro";
 import { ValueSetterPair } from "../variable/valueSetterPair";
 

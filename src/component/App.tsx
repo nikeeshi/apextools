@@ -9,6 +9,7 @@ import {
   applyFnToVSPair,
   ValueSetterPair,
 } from "../variable/valueSetterPair";
+import LanguageSwitch from "./LanguageSwitch";
 function Inputs({
   placement,
   killPoint,
@@ -20,7 +21,7 @@ function Inputs({
   tier: ValueSetterPair<Tier>;
   lostForgiveness: ValueSetterPair<boolean>;
 }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const placementStr = applyFnToVSPair(
     placement,
     (v) => String(v),
@@ -101,6 +102,7 @@ export default function App() {
   return (
     <div>
       <h1>{t("Apex Legends RP calculator")}</h1>
+      <LanguageSwitch />
       <Inputs
         placement={placement}
         killPoint={killPoint}
