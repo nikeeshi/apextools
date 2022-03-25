@@ -10,12 +10,12 @@ import {
 } from "./variable/valueSetterPair";
 function Inputs({
   placement,
-  killpoint,
+  killPoint,
   tier,
   lostForgiveness,
 }: {
   placement: ValueSetterPair<number>;
-  killpoint: ValueSetterPair<number>;
+  killPoint: ValueSetterPair<number>;
   tier: ValueSetterPair<Tier>;
   lostForgiveness: ValueSetterPair<boolean>;
 }) {
@@ -25,8 +25,8 @@ function Inputs({
     (str) => parseInt(str, 10)
   );
 
-  const killpointStr = applyFnToVSPair(
-    killpoint,
+  const killPointStr = applyFnToVSPair(
+    killPoint,
     (v) => String(v),
     (str) => parseInt(str, 10)
   );
@@ -41,7 +41,7 @@ function Inputs({
       </div>
       <div>
         <RadioStyleSelector
-          selected={killpointStr}
+          selected={killPointStr}
           label="Kill/Assist Point"
           list={range(0, 20).map((v) => String(v))}
         />
@@ -65,12 +65,12 @@ function Inputs({
 
 function Output({
   placement,
-  killpoint: killPoint,
+  killPoint,
   tier,
   lostForgiveness,
 }: {
   placement: number;
-  killpoint: number;
+  killPoint: number;
   tier: Tier;
   lostForgiveness: boolean;
 }) {
@@ -88,20 +88,20 @@ function Output({
 }
 function App() {
   const placement = useState<number>(1);
-  const killpoint = useState<number>(0);
+  const killPoint = useState<number>(0);
   const tier = useState<Tier>(Tiers[0]);
   const lostForgiveness = useState<boolean>(false);
   return (
     <div>
       <Inputs
         placement={placement}
-        killpoint={killpoint}
+        killPoint={killPoint}
         tier={tier}
         lostForgiveness={lostForgiveness}
       />
       <Output
         placement={placement[0]}
-        killpoint={killpoint[0]}
+        killPoint={killPoint[0]}
         tier={tier[0]}
         lostForgiveness={lostForgiveness[0]}
       />
