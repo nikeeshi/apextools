@@ -7,7 +7,16 @@ export default function LanguageSwitch() {
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
-
+  const languageList = [
+    ["ja", "日本語"],
+    ["en", "English"],
+  ];
+  const currentLg = i18n.language;
+  const languageListInOrder = languageList
+    .filter((lg) => lg[0] === currentLg)
+    .concat(
+      languageList.filter((lg) => lg[0] !== currentLg)
+    );
   return (
     <div
       css={{
@@ -16,23 +25,19 @@ export default function LanguageSwitch() {
         right: 24,
       }}
     >
-      <a
-        href="#"
-        onClick={() => {
-          changeLanguage("ja");
-        }}
-      >
-        日本語
-      </a>
-      /
-      <a
-        href="#"
-        onClick={() => {
-          changeLanguage("en");
-        }}
-      >
-        English
-      </a>
+      {languageListInOrder.map(([code, name], index) => (
+        <>
+          {index !== 0 && "/"}
+          <a
+            href="#"
+            onClick={() => {
+              changeLanguage(code);
+            }}
+          >
+            {name}
+          </a>
+        </>
+      ))}
     </div>
   );
 }
