@@ -1,11 +1,10 @@
 import { ValueSetterPair } from "../variable/valueSetterPair";
 
-type Props<Candidates extends readonly (string | null)[]> =
-  {
-    label: string;
-    list: Candidates;
-    selected: ValueSetterPair<Candidates[number]>;
-  };
+type Props<Candidates extends readonly string[]> = {
+  label: string;
+  list: Candidates;
+  selected: ValueSetterPair<Candidates[number]>;
+};
 type RadioStyleSelectorOptionProps = {
   onClick: () => void;
   selected: boolean;
@@ -19,14 +18,19 @@ export function RadioStyleSelectorOption({
   return (
     <button
       onClick={onClick}
-      style={{ borderWidth: selected ? 1 : 0 }}
+      style={{
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: selected ? "#000000" : "#efefef",
+        backgroundColor: "#efefef",
+      }}
     >
       {label}
     </button>
   );
 }
 export function RadioStyleSelector<
-  Candidates extends readonly (string | null)[]
+  Candidates extends readonly string[]
 >({ label, selected, list }: Props<Candidates>) {
   const [selectedItem, select] = selected;
   return (
@@ -36,11 +40,10 @@ export function RadioStyleSelector<
         {list.map((item) => (
           <RadioStyleSelectorOption
             onClick={() => {
-              if (selectedItem === item) select(null);
-              else select(item);
+              select(item);
             }}
             selected={selectedItem === item}
-            label={item ?? "---"}
+            label={item}
           />
         ))}
       </div>

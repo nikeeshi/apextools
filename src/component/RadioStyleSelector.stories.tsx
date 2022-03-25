@@ -19,7 +19,7 @@ export default {
 const Template: ComponentStory<
   typeof RadioStyleSelector
 > = (args) => {
-  const selected = useState<string | null>(null);
+  const selected = useState<string>(args.list[0]);
   return (
     <div>
       <div>{"" + selected[0]}</div>

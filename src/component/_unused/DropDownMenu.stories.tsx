@@ -19,7 +19,7 @@ export default {
 const Template: ComponentStory<typeof DropDownMenu> = (
   args
 ) => {
-  const selected = useState<string | null>("1");
+  const selected = useState<string>("1");
   return (
     <div>
       <div>{"" + selected[0]}</div>
@@ -32,5 +32,5 @@ export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   label: "Button",
-  list: ["1", null, "2", "3"],
+  list: ["1", "2", "3"],
 };
