@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react/macro";
+import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function LanguageSwitch() {
@@ -18,15 +19,9 @@ export default function LanguageSwitch() {
       languageList.filter((lg) => lg[0] !== currentLg)
     );
   return (
-    <div
-      css={{
-        position: "absolute",
-        top: 24,
-        right: 24,
-      }}
-    >
+    <>
       {languageListInOrder.map(([code, name], index) => (
-        <>
+        <Fragment key={index}>
           {index !== 0 && "/"}
           <a
             href="#"
@@ -36,8 +31,8 @@ export default function LanguageSwitch() {
           >
             {name}
           </a>
-        </>
+        </Fragment>
       ))}
-    </div>
+    </>
   );
 }

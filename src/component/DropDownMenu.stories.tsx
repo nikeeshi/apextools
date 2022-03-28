@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof DropDownMenu> = (
   return (
     <div>
       <div>{"" + selected[0]}</div>
-      <DropDownMenu {...args} selected={selected} />
+      <DropDownMenu {...args} selected={selected as any} />
     </div>
   );
 };
@@ -32,5 +32,6 @@ export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   label: "Button",
-  list: ["1", "2", "3"],
+  list: [1, 2, 3],
+  itemLabel: (a) => a + "",
 };
