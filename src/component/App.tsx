@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { jsx } from "@emotion/react/macro";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { OnOffToggle } from "./OnOffToggle";
@@ -5,10 +7,9 @@ import { RadioStyleSelector } from "./RadioStyleSelector";
 import { Tiers } from "../data";
 import { calcRP, Tier } from "../rpCalculator";
 import { range } from "../util/range";
-import {
-  ValueSetterPair,
-} from "../variable/valueSetterPair";
+import { ValueSetterPair } from "../variable/valueSetterPair";
 import LanguageSwitch from "./LanguageSwitch";
+import Breakdown from "./Breakdown";
 function Inputs({
   placement,
   killPoint,
@@ -35,7 +36,7 @@ function Inputs({
       <div>
         <RadioStyleSelector
           selected={killPoint}
-          label={t("Kill/Assist Point")}
+          label={t("Kill/Assist Points")}
           list={range(0, 20)}
           itemLabel={(a) => String(a)}
         />
@@ -58,30 +59,21 @@ function Inputs({
   );
 }
 
-function Output({
-  placement,
-  killPoint,
-  tier,
-  lostForgiveness,
-}: {
+function Output(props: {
   placement: number;
   killPoint: number;
   tier: Tier;
   lostForgiveness: boolean;
 }) {
   const { t } = useTranslation();
-  const totalRP = calcRP({
-    placement,
-    killPoint,
-    tier,
-    lostForgiveness,
-  });
+  const totalRP = calcRP(props);
   return (
-    <div>
-      <label>
-        {t("Total RP") + ": "}
+    <div css={{ marginTop: 24 }}>
+      <div>
+        {t("Earned RP") + ": "}
         {totalRP}
-      </label>
+      </div>
+      <Breakdown {...props} />
     </div>
   );
 }

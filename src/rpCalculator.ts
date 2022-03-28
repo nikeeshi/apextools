@@ -1,13 +1,5 @@
-import { calcRPFromPlacement, calcRPPerKill, RP_FROM_KILL_CAP } from "./data";
+import { calcRPFromPlacement, calcRPPerKill, RP_FROM_KILL_CAP, Tier } from "./data";
 
-export type Tier =
-  | "Bronze"
-  | "Silver"
-  | "Gold"
-  | "Platinum"
-  | "Diamond"
-  | "Master"
-  | "Apex Predator";
 export const ENTRY_COST = {
   Bronze: 0,
   Silver: 12,

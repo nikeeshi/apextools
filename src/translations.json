@@ -2,10 +2,10 @@
   "en": {
     "translation": {
       "Placement": "Placement",
-      "Kill/Assist Point": "Kill/Assist Point",
+      "Kill/Assist Points": "Kill/Assist Points",
       "Tier": "Tier",
       "Lost Forgiveness": "Lost Forgiveness",
-      "Total RP": "Total RP",
+      "Earned RP": "Earned RP",
       "Apex Legends RP calculator": "Apex Legends RP calculator",
       "Bronze": "Bronze",
       "Silver": "Silver",
@@ -13,16 +13,20 @@
       "Platinum": "Platinum",
       "Diamond": "Diamond",
       "Master": "Master",
-      "Apex Predator": "Apex Predator"
+      "Apex Predator": "Apex Predator",
+      "Entry cost": "Entry cost",
+      "Breakdown": "Breakdown",
+      "Base RP from placement": "Base RP from placement",
+      "Bonus RP from Kill/Assist": "Bonus RP from Kill/Assist"
     }
   },
   "ja": {
     "translation": {
       "Placement": "順位",
-      "Kill/Assist Point": "キルアシストポイント",
+      "Kill/Assist Points": "キルアシストポイント",
       "Tier": "ティア",
       "Lost Forgiveness": "敗北免除",
-      "Total RP": "合計RP",
+      "Earned RP": "獲得RP",
       "Apex Legends RP calculator": "エイペックスレジェンズ RP 計算機",
       "Bronze": "ブロンズ",
       "Silver": "シルバー",
@@ -30,7 +34,11 @@
       "Platinum": "プラチナ",
       "Diamond": "ダイアモンド",
       "Master": "マスター",
-      "Apex Predator": "Apexプレデター"
+      "Apex Predator": "Apexプレデター",
+      "Entry cost": "参加費",
+      "Breakdown": "内訳",
+      "Base RP from placement": "順位RP",
+      "Bonus RP from Kill/Assist": "キルアシストによるボーナスRP"
     }
   }
 }
