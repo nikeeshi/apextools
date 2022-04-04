@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react/macro";
 import { ValueSetterPair } from "../variable/valueSetterPair";
-import mq from "../mediaQuery";
 
 type Props<Item> = {
   label: string;
