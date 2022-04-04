@@ -5,11 +5,15 @@ import { Tier, Tiers } from "../data";
 import { Header } from "./Header";
 import { Inputs } from "./Inputs";
 import { Output } from "./Output";
+import { usePrimitiveState } from "../util/usePrimitiveState";
+import { Observer } from "mobx-react-lite";
+
 export default function App() {
-  const placement = useState<number>(1);
-  const killPoint = useState<number>(0);
-  const tier = useState<Tier>(Tiers[0]);
-  const lostForgiveness = useState<boolean>(false);
+  const placement = usePrimitiveState(1);
+  const killPoint = usePrimitiveState(0);
+  const tier = usePrimitiveState<Tier>(Tiers[0]);
+  const lostForgiveness = usePrimitiveState(false);
+
   return (
     <>
       <Header />
@@ -19,12 +23,16 @@ export default function App() {
         tier={tier}
         lostForgiveness={lostForgiveness}
       />
-      <Output
-        placement={placement[0]}
-        killPoint={killPoint[0]}
-        tier={tier[0]}
-        lostForgiveness={lostForgiveness[0]}
-      />
+      <Observer>
+        {() => (
+          <Output
+            placement={placement.current}
+            killPoint={killPoint.current}
+            tier={tier.current}
+            lostForgiveness={lostForgiveness.current}
+          />
+        )}
+      </Observer>
     </>
   );
 }

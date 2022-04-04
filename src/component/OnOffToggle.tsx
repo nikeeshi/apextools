@@ -1,21 +1,26 @@
-import { ValueSetterPair } from "../variable/valueSetterPair";
+import { action } from "mobx";
+import { Observer } from "mobx-react-lite";
+import { PrimitiveState } from "../util/usePrimitiveState";
 
 type Props = {
   label: string;
-  current: ValueSetterPair<boolean>;
+  state: PrimitiveState<boolean>;
 };
-export function OnOffToggle({
-  label,
-  current: [value, setter],
-}: Props) {
+export function OnOffToggle({ label, state }: Props) {
   return (
     <label>
       {label}{" "}
-      <input
-        type="checkbox"
-        checked={value}
-        onChange={() => setter(!value)}
-      />
+      <Observer>
+        {() => (
+          <input
+            type="checkbox"
+            checked={state.current}
+            onChange={action(() => {
+              state.current = !state.current;
+            })}
+          />
+        )}
+      </Observer>
     </label>
   );
 }

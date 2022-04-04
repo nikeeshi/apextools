@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react/macro";
-import { ValueSetterPair } from "../variable/valueSetterPair";
+import { action } from "mobx";
+import { Observer } from "mobx-react-lite";
+import { PrimitiveState } from "../util/usePrimitiveState";
 
 export type RadioStyleSelectorProps<Item> = {
   label: string;
   list: readonly Item[];
-  selected: ValueSetterPair<Item>;
+  selected: PrimitiveState<Item>;
   itemLabel: (i: Item) => string;
 };
 type RadioStyleSelectorOptionProps = {
@@ -40,20 +42,23 @@ export function RadioStyleSelector<Item extends any>({
   list,
   itemLabel,
 }: RadioStyleSelectorProps<Item>) {
-  const [selectedItem, select] = selected;
   return (
     <label>
       {label}{" "}
       <div>
         {list.map((item, index) => (
-          <RadioStyleSelectorOption
-            onClick={() => {
-              select(item);
-            }}
-            selected={selectedItem === item}
-            label={itemLabel(item)}
-            key={index}
-          />
+          <Observer>
+            {() => (
+              <RadioStyleSelectorOption
+                onClick={action(() => {
+                  selected.current = item;
+                })}
+                selected={selected.current === item}
+                label={itemLabel(item)}
+                key={index}
+              />
+            )}
+          </Observer>
         ))}
       </div>
     </label>

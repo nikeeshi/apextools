@@ -26,7 +26,7 @@ const Template: any = (
   return (
     <div>
       <div>{"" + selected[0]}</div>
-      <RadioStyleSelector {...args} selected={selected} />
+      {/* <RadioStyleSelector {...args} selected={selected} /> */}
     </div>
   );
 };

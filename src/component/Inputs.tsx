@@ -3,10 +3,10 @@ import { OnOffToggle } from "./OnOffToggle";
 import { RadioStyleSelector } from "./RadioStyleSelector";
 import { Tier, Tiers } from "../data";
 import { range } from "../util/range";
-import { ValueSetterPair } from "../variable/valueSetterPair";
 import { isLarge } from "../mediaQuery";
 import { DropDownMenu } from "./DropDownMenu";
 import { useMediaQuery } from "@react-hook/media-query";
+import { PrimitiveState } from "../util/usePrimitiveState";
 
 export function Inputs({
   placement,
@@ -14,15 +14,16 @@ export function Inputs({
   tier,
   lostForgiveness,
 }: {
-  placement: ValueSetterPair<number>;
-  killPoint: ValueSetterPair<number>;
-  tier: ValueSetterPair<Tier>;
-  lostForgiveness: ValueSetterPair<boolean>;
+  placement: PrimitiveState<number>;
+  killPoint: PrimitiveState<number>;
+  tier: PrimitiveState<Tier>;
+  lostForgiveness: PrimitiveState<boolean>;
 }) {
   const { t } = useTranslation();
-  const Selector = useMediaQuery(isLarge)
+  const Selector =
+    RadioStyleSelector; /*useMediaQuery(isLarge)
     ? RadioStyleSelector
-    : DropDownMenu;
+    : DropDownMenu;*/
   return (
     <div>
       <div>
@@ -51,7 +52,7 @@ export function Inputs({
       </div>
       <div>
         <OnOffToggle
-          current={lostForgiveness}
+          state={lostForgiveness}
           label={t("Lost Forgiveness")}
         />
       </div>

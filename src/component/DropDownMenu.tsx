@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react/macro";
-import { ValueSetterPair } from "../variable/valueSetterPair";
+import { action } from "mobx";
+import { PrimitiveState } from "../util/usePrimitiveState";
 
 type Props<Item> = {
   label: string;
   list: readonly Item[];
-  selected: ValueSetterPair<Item>;
+  selected: PrimitiveState<Item>;
   itemLabel: (i: Item) => string;
 };
 export function DropDownMenu<Item>({
@@ -14,16 +15,16 @@ export function DropDownMenu<Item>({
   list,
   itemLabel,
 }: Props<Item>) {
-  const [selectedItem, select] = selected;
   return (
     <label>
       {label}{" "}
       <select
-        onChange={(e) => {
-          select(list[parseInt(e.target.value, 10)]);
-        }}
+        onChange={action((e) => {
+          selected.current =
+            list[parseInt(e.target.value, 10)];
+        })}
         value={list.findIndex(
-          (item) => item === selectedItem
+          (item) => item === selected.current
         )}
       >
         {list.map((item, index) => (
