@@ -20,10 +20,9 @@ export function Inputs({
   lostForgiveness: PrimitiveState<boolean>;
 }) {
   const { t } = useTranslation();
-  const Selector =
-    RadioStyleSelector; /*useMediaQuery(isLarge)
+  const Selector = useMediaQuery(isLarge)
     ? RadioStyleSelector
-    : DropDownMenu;*/
+    : DropDownMenu;
   return (
     <div>
       <div>
