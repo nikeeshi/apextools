@@ -37,7 +37,7 @@ export function Inputs({
         <Selector
           selected={killPoint}
           label={t("Kill/Assist Points")}
-          list={range(0, 20)}
+          list={range(0, 13)}
           itemLabel={(a) => String(a)}
         />
       </div>

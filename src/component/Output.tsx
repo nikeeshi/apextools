@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Tier } from "../data";
 import { calcRP } from "../rpCalculator";
 import Breakdown from "./Breakdown";
+import { Report } from "./Report";
 
 export function Output(props: {
   placement: number;
@@ -20,6 +21,9 @@ export function Output(props: {
         {totalRP}
       </div>
       <Breakdown {...props} />
+      <div css={{ marginTop: 24 }}>
+        <Report tier={props.tier} />
+      </div>
     </div>
   );
 }
