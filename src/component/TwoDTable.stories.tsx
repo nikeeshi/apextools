@@ -2,7 +2,7 @@ import {
   ComponentMeta,
 } from "@storybook/react";
 
-import { TwoDTable, TableProps } from "./TwoDTable";
+import { TwoDTable, TwoDTableProps } from "./TwoDTable";
 
 export default {
   component: TwoDTable,
@@ -13,7 +13,7 @@ export default {
 } as ComponentMeta<typeof TwoDTable>;
 
 const Template: any = (
-  args: TableProps<number, number>
+  args: TwoDTableProps<number, number>
 ) => <TwoDTable {...args} />;
 
 export const Primary = Template.bind({});

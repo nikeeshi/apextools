@@ -8,12 +8,26 @@ const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
 `;
-const Tr = styled.tr``;
-const Th = styled.th`
+const FirstRow = styled.tr``;
+const SecondRow = styled.tr``;
+const BodyRow = styled.tr``;
+const RowLabel = styled.th`
   border: solid 2px lightgray;
   text-align: center;
 `;
-const Td = styled.td`
+const ColumnLabel = styled.th`
+  border: solid 2px lightgray;
+  text-align: center;
+`;
+const ColumnHeader = styled.th`
+  border: solid 2px lightgray;
+  text-align: center;
+`;
+const RowHeader = styled.th`
+  border: solid 2px lightgray;
+  text-align: center;
+`;
+const Cell = styled.td`
   border: solid 2px lightgray;
   text-align: end;
 `;
@@ -22,38 +36,49 @@ export type Axis<T> = {
   values: T[];
   header(value: T): ReactNode;
 };
-export type TableProps<X, Y> = {
+export type TwoDTableProps<X, Y> = {
   axises: [Axis<X>, Axis<Y>];
-  cell: (...value: [X, Y]) => ReactNode;
+  cell: (x: X, y: Y) => ReactNode;
 };
 export function TwoDTable<X, Y>({
   axises: [xAxis, yAxis],
   cell,
-}: TableProps<X, Y>): JSX.Element {
+}: TwoDTableProps<X, Y>): JSX.Element {
   return (
     <Table>
-      <Tr>
-        <Th scope="col" rowSpan={2}>
-          {yAxis.label}
-        </Th>
-        <Th scope="col" colSpan={xAxis.values.length}>
-          {xAxis.label}
-        </Th>
-      </Tr>
-      <Tr>
-        {/* An extended row here */}
-        {xAxis.values.map((x) => (
-          <Th scope="col">{xAxis.header(x)}</Th>
-        ))}
-      </Tr>
-      {yAxis.values.map((y) => (
-        <Tr>
-          <Th scope="row">{yAxis.header(y)}</Th>
+      <thead>
+        <FirstRow>
+          <RowLabel scope="col" rowSpan={2}>
+            {yAxis.label}
+          </RowLabel>
+          <ColumnLabel
+            scope="col"
+            colSpan={xAxis.values.length}
+          >
+            {xAxis.label}
+          </ColumnLabel>
+        </FirstRow>
+        <SecondRow>
+          {/* An extended row here */}
           {xAxis.values.map((x) => (
-            <Td>{cell(x, y)}</Td>
+            <ColumnHeader scope="col">
+              {xAxis.header(x)}
+            </ColumnHeader>
           ))}
-        </Tr>
-      ))}
+        </SecondRow>
+      </thead>
+      <tbody>
+        {yAxis.values.map((y) => (
+          <BodyRow>
+            <RowHeader scope="row">
+              {yAxis.header(y)}
+            </RowHeader>
+            {xAxis.values.map((x) => (
+              <Cell>{cell(x, y)}</Cell>
+            ))}
+          </BodyRow>
+        ))}
+      </tbody>
     </Table>
   );
 }

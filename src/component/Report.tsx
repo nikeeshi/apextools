@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+/** @jsxImportSource @emotion/react */
+import { jsx } from "@emotion/react/macro";
 import { TwoDTable } from "./TwoDTable";
 import { useTranslation } from "react-i18next";
 import { range } from "../util/range";
@@ -26,6 +27,7 @@ export function Cell({
 type Props = { tier: Tier };
 export function Report({ tier }: Props) {
   const { t } = useTranslation();
+
   return (
     <TwoDTable
       axises={[
