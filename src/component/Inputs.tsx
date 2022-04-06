@@ -29,7 +29,7 @@ export function Inputs({
         <Selector
           selected={placement}
           label={t("Placement")}
-          list={range(1, 20)}
+          list={range(20, 1)}
           itemLabel={(a) => String(a)}
         />
       </div>
