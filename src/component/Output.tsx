@@ -22,7 +22,7 @@ export function Output(props: {
       </div>
       <Breakdown {...props} />
       <div css={{ marginTop: 24 }}>
-        <Report tier={props.tier} />
+        <Report {...props} />
       </div>
     </div>
   );

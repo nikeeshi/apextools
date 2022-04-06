@@ -6,7 +6,7 @@ import { range } from "../util/range";
 import { isLarge } from "../mediaQuery";
 import { DropDownMenu } from "./DropDownMenu";
 import { useMediaQuery } from "@react-hook/media-query";
-import { PrimitiveState } from "../util/usePrimitiveState";
+import { IObservableValue } from "mobx";
 
 export function Inputs({
   placement,
@@ -14,10 +14,10 @@ export function Inputs({
   tier,
   lostForgiveness,
 }: {
-  placement: PrimitiveState<number>;
-  killPoint: PrimitiveState<number>;
-  tier: PrimitiveState<Tier>;
-  lostForgiveness: PrimitiveState<boolean>;
+  placement: IObservableValue<number>;
+  killPoint: IObservableValue<number>;
+  tier: IObservableValue<Tier>;
+  lostForgiveness: IObservableValue<boolean>;
 }) {
   const { t } = useTranslation();
   const Selector = useMediaQuery(isLarge)

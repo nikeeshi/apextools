@@ -17,7 +17,9 @@
       "Entry cost": "Entry cost",
       "Breakdown": "Breakdown",
       "Base RP from placement": "Base RP from placement",
-      "Bonus RP from Kill/Assist": "Bonus RP from Kill/Assist"
+      "Bonus RP from Kill/Assist": "Bonus RP from Kill/Assist",
+      "RP for {{tier}}": "RP for {{tier}}",
+      "RP for {{tier}} with lost forgiveness": "RP for {{tier}} with lost forgiveness"
     }
   },
   "ja": {
@@ -38,7 +40,9 @@
       "Entry cost": "参加費",
       "Breakdown": "内訳",
       "Base RP from placement": "順位RP",
-      "Bonus RP from Kill/Assist": "キルアシストによるボーナスRP"
+      "Bonus RP from Kill/Assist": "キルアシストによるボーナスRP",
+      "RP for {{tier}}": "{{tier}}での獲得RP",
+      "RP for {{tier}} with lost forgiveness": "{{tier}}での獲得RP (敗北免除あり)"
     }
   }
 }

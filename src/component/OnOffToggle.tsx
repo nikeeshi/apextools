@@ -1,10 +1,9 @@
-import { action } from "mobx";
+import { action, IObservableValue } from "mobx";
 import { Observer } from "mobx-react-lite";
-import { PrimitiveState } from "../util/usePrimitiveState";
 
 type Props = {
   label: string;
-  state: PrimitiveState<boolean>;
+  state: IObservableValue<boolean>;
 };
 export function OnOffToggle({ label, state }: Props) {
   return (
@@ -14,10 +13,8 @@ export function OnOffToggle({ label, state }: Props) {
         {() => (
           <input
             type="checkbox"
-            checked={state.current}
-            onChange={action(() => {
-              state.current = !state.current;
-            })}
+            checked={state.get()}
+            onChange={action(() => state.set(!state.get()))}
           />
         )}
       </Observer>
