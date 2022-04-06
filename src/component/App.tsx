@@ -22,7 +22,7 @@ export default function App() {
   const pageState = useMemo<PageState>(
     () =>
       observable({
-        placement: 1,
+        placement: 20,
         killPoint: 0,
         tier: Tiers[0],
         lostForgiveness: false,
