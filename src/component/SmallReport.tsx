@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react/macro";
+import { css, jsx } from "@emotion/react/macro";
 import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { range } from "../util/range";
@@ -65,12 +65,26 @@ const Td = styled.td`
     background-color: lightgray;
   }
 `;
-const Table = styled.table`
+const Table = (props: any) => (
+  <div
+    css={css`
+      overflow-x: scroll;
+      width: 100%;
+      height: 50vh;
+    `}
+  >
+    <table
+      css={css`
   position: relative;
   width: 800px;
-  // table-layout: fixed;
   border-collapse: collapse;
-`;
+      `}
+      {...props}
+    >
+      {props.children}
+    </table>
+  </div>
+);
 const Tr = styled.tr``;
 
 export const Cell = observer(
