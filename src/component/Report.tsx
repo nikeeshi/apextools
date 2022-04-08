@@ -9,17 +9,27 @@ import { TwoDTableFormat } from "./TwoDTableFormat";
 import { useContext } from "react";
 import { PageStateContext } from "./App";
 import { action } from "mobx";
-import { observer, Observer } from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 type ExtraThProps = {
   selected?: boolean;
 };
-const Th = styled.th`
+
+const TopTh = styled.th`
+  border: solid 2px lightgray;
+  text-align: center;
+  cursor: default;
+`;
+const SubTh = styled.th`
   border: solid 2px lightgray;
   text-align: center;
   background-color: ${({ selected }: ExtraThProps) =>
     selected ? "dimgray" : undefined};
   color: ${({ selected }: ExtraThProps) =>
     selected ? "white" : undefined};
+  cursor: pointer;
+  :hover {
+    background-color: lightgray;
+  }
 `;
 type ExtraTdProps = {
   selected?: boolean;
@@ -31,7 +41,11 @@ const Td = styled.td`
     selected ? "dimgray" : undefined};
   color: ${({ selected }: ExtraThProps) =>
     selected ? "white" : undefined};
-`;
+  cursor: pointer;
+  :hover {
+    background-color: lightgray;
+  }
+`; 
 const Table = styled.table`
   table-layout: fixed;
   width: 100%;
@@ -82,13 +96,13 @@ export const ColumnHeader = observer(
     });
 
     return (
-      <Th
+      <SubTh
         scope="col"
         onClick={handleClick}
         selected={placement == pageState.placement}
       >
         {placement}
-      </Th>
+      </SubTh>
     );
   }
 );
@@ -101,13 +115,13 @@ export const RowHeader = observer(
     });
 
     return (
-      <Th
+      <SubTh
         scope="row"
         onClick={handleClick}
         selected={killPoint == pageState.killPoint}
       >
         {killPoint}
-      </Th>
+      </SubTh>
     );
   }
 );
@@ -132,7 +146,7 @@ export function Report({ tier, lostForgiveness }: Props) {
       axises={{
         x: {
           label: (props) => (
-            <Th {...props}>{t("Placement")}</Th>
+            <TopTh {...props}>{t("Placement")}</TopTh>
           ),
           values: range(20, 1),
           header: (a) => (
@@ -141,7 +155,9 @@ export function Report({ tier, lostForgiveness }: Props) {
         },
         y: {
           label: (props) => (
-            <Th {...props}>{t("Kill/Assist Points")}</Th>
+            <TopTh {...props}>
+              {t("Kill/Assist Points")}
+            </TopTh>
           ),
           values: range(13, 0),
           header: (a) => <RowHeader killPoint={a.value} />,
