@@ -4,21 +4,21 @@ import styled from "@emotion/styled/macro";
 import { ComponentMeta } from "@storybook/react";
 import {
   HeaderCellConfig,
-  TwoDTableFormat,
-  TwoDTableFormatProps,
-} from "./TwoDTableFormat";
+  TwoDTableLayout,
+  TwoDTableLayoutProps,
+} from "./TwoDTableLayout";
 
 export default {
-  component: TwoDTableFormat,
+  component: TwoDTableLayout,
   argTypes: {
     backgroundColor: { control: "color" },
   },
   args: {},
-} as ComponentMeta<typeof TwoDTableFormat>;
+} as ComponentMeta<typeof TwoDTableLayout>;
 
 const Template: any = (
-  args: TwoDTableFormatProps<number, number>
-) => <TwoDTableFormat {...args} />;
+  args: TwoDTableLayoutProps<number, number>
+) => <TwoDTableLayout {...args} />;
 
 export const Primary = Template.bind({});
 const Th = styled.th`
@@ -50,10 +50,10 @@ Primary.args = {
       header: ({ value }) => <Th scope="row">{value}</Th>,
     },
   },
-  caption: () => <>caption</>,
+  caption: () => <caption>caption</caption>,
   cell: ({ x, y }: { x: number; y: number }) => (
     <Td>{"" + x + y}</Td>
   ),
   Table: (props: any) => <Table {...props} />,
   Tr: (props: any) => <Tr {...props} />,
-} as TwoDTableFormatProps<number, number>;
+} as TwoDTableLayoutProps<number, number>;

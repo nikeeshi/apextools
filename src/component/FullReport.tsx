@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { range } from "../util/range";
 import { Tier } from "../data";
 import { calcRP } from "../rpCalculator";
-import { TwoDTableFormat } from "./TwoDTableFormat";
+import { TwoDTableLayout } from "./TwoDTableLayout";
 import { useContext } from "react";
 import { PageStateContext } from "./App";
 import { action } from "mobx";
@@ -133,7 +133,7 @@ export function Report({ tier, lostForgiveness }: Props) {
   const { t } = useTranslation();
 
   return (
-    <TwoDTableFormat
+    <TwoDTableLayout
       caption={() => (
         <caption>
           {lostForgiveness

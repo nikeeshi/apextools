@@ -9,7 +9,7 @@ export type Axis<T> = {
   values: T[];
   header: (props: { value: T }) => ReactNode;
 };
-export type TwoDTableFormatProps<X, Y> = {
+export type TwoDTableLayoutProps<X, Y> = {
   axises: { x: Axis<X>; y: Axis<Y> };
   cell: (props: { x: X; y: Y }) => ReactNode;
   caption: () => ReactNode;
@@ -17,13 +17,13 @@ export type TwoDTableFormatProps<X, Y> = {
   Tr: ComponentType;
 };
 
-export function TwoDTableFormat<X, Y>({
+export function TwoDTableLayout<X, Y>({
   axises: { x: xAxis, y: yAxis },
   cell,
   caption,
   Table,
   Tr,
-}: TwoDTableFormatProps<X, Y>) {
+}: TwoDTableLayoutProps<X, Y>) {
   return (
     <Table>
       {caption()}
