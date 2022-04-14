@@ -60,11 +60,14 @@ export function Sticky3x3({
           height: ${totalInnerHeight}px;
         `}
       >
+        {/* center */}
         {cell(1, 1)}
+        {/* edges */}
         {cell(1, 0)}
         {cell(0, 1)}
         {cell(2, 1)}
         {cell(1, 2)}
+        {/* corners */}
         {cell(0, 0)}
         {cell(2, 0)}
         {cell(0, 2)}
