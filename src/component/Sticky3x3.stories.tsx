@@ -13,13 +13,21 @@ export const A = () => {
       cells={[
         ["top-left", "top", "top-right"],
         ["left", "center", "right"],
-        ["bottom-left", "bottom", "bottom-right"],
+        [
+          <div
+            css={css`
+              height: 100%;
+              width: 100%;
+              background-color: orange;
+            `}
+          >
+            bottom-left
+          </div>,
+          "bottom",
+          "bottom-right",
+        ],
       ]}
-      cellBackgroundColors={[
-        [null, null, null],
-        [null, "lightgray", null],
-        [null, null, null],
-      ]}
+      fakeBackground
     />
   );
 };

@@ -1,6 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react/macro";
-import { ReactNode } from "react";
+import { entries } from "mobx";
+import { useEffect, useMemo } from "react";
+import { useCallback } from "react";
+import { useState } from "react";
+import { createRef, ReactNode } from "react";
 import { Sticky3x3 } from "./Sticky3x3";
 
 export type Config = {
@@ -16,7 +20,7 @@ export function ScrollableTable<X, Y>({
   viewport = [500, 500],
   headerSize = [80, 60],
   cellSize = [46, 30], // content-box
-  colCaptionHeight = 30,
+  colCaptionHeight: xCaptionHeight = 30,
   gap = 2,
   headerGap = 5,
   borderColor = "pink",
@@ -53,9 +57,34 @@ export function ScrollableTable<X, Y>({
     cellSize[1] * ys.length + gap * (ys.length - 1),
     gap,
   ] as Vec3<number>;
-
+  const [divRef, setDivRef] =
+    useState<HTMLDivElement | null>(null);
+  const [clientWidth, setClientWidth] = useState(1);
+  useEffect(() => {
+    setClientWidth(divRef?.clientWidth ?? 1);
+  }, [divRef]);
+  const xCaptionWidth = useMemo(
+    () =>
+      Math.max(
+        clientWidth - headerSize[0] - headerGap - gap * 2,
+        1
+      ),
+    [clientWidth]
+  );
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(
+      (entries) => {
+        setClientWidth(divRef?.clientWidth ?? 1);
+      }
+    );
+    divRef && resizeObserver.observe(divRef);
+    return () => {
+      divRef && resizeObserver.unobserve(divRef);
+    };
+  }, [divRef, clientWidth]);
   return (
     <Sticky3x3
+      ref={(div) => div && setDivRef(div)}
       width={viewport[0]}
       height={viewport[1]}
       innerWidth={width}
@@ -82,16 +111,16 @@ export function ScrollableTable<X, Y>({
                 border-style: solid;
                 border-color: ${borderColor};
                 border-width: ${gap}px 0 ${headerGap}px 0;
-                width: ${width[1]}px;
-                height: ${colCaptionHeight}px;
+                width: ${xCaptionWidth}px;
+                height: ${xCaptionHeight}px;
                 position: absolute;
                 top: ${-gap}px;
                 left: ${headerSize[0] + headerGap}px;
               `}
             >
               {xCaption({
-                width: width[1],
-                height: colCaptionHeight,
+                width: xCaptionWidth,
+                height: xCaptionHeight,
               })}
             </div>
           </div>,
@@ -101,7 +130,7 @@ export function ScrollableTable<X, Y>({
               border-color: ${borderColor};
               border-width: 0 0 ${headerGap}px 0;
               margin-top: ${gap +
-              colCaptionHeight +
+              xCaptionHeight +
               headerGap}px;
             `}
           >
@@ -109,7 +138,7 @@ export function ScrollableTable<X, Y>({
               css={css`
                 display: flex;
                 height: ${headerSize[1] -
-                colCaptionHeight -
+                xCaptionHeight -
                 headerGap}px;
               `}
             >
@@ -123,7 +152,7 @@ export function ScrollableTable<X, Y>({
                     }
                     width: ${cellSize[0]}px;
                     height: ${headerSize[1] -
-                    colCaptionHeight -
+                    xCaptionHeight -
                     headerGap}px;
                   `}
                 >
@@ -131,7 +160,7 @@ export function ScrollableTable<X, Y>({
                     width: cellSize[0],
                     height:
                       headerSize[1] -
-                      colCaptionHeight -
+                      xCaptionHeight -
                       headerGap,
                   })}
                 </div>
@@ -244,11 +273,6 @@ export function ScrollableTable<X, Y>({
             `}
           />,
         ],
-      ]}
-      cellBackgroundColors={[
-        [null, null, null],
-        [null, null, null],
-        [null, null, null],
       ]}
     />
   );

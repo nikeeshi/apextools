@@ -5,87 +5,75 @@ import { useTranslation } from "react-i18next";
 import { range } from "../util/range";
 import { Tier } from "../data";
 import { calcRP } from "../rpCalculator";
-import { TwoDTableLayout } from "./TwoDTableLayout";
 import { useContext } from "react";
 import { PageStateContext } from "./App";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
+import { ScrollableTable } from "./ScrollableTable";
 type ExtraThProps = {
   selected?: boolean;
 };
 
-const XTitleTh = styled.th`
-  border: solid 2px lightgray;
+const XCaption = styled.div`
   text-align: center;
   cursor: default;
+  background-color: white;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
 `;
-const YTitleTh = styled.th`
-  width: 80px;
-  border: solid 2px lightgray;
+const YCaption = styled.div`
   text-align: center;
   cursor: default;
+  background-color: white;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
 `;
-const SubXTh = styled.th`
-  border: solid 2px lightgray;
+const SubXTh = styled.div`
   text-align: center;
   background-color: ${({ selected }: ExtraThProps) =>
-    selected ? "dimgray" : undefined};
-  color: ${({ selected }: ExtraThProps) =>
-    selected ? "white" : undefined};
-  cursor: pointer;
-  width: 36px;
-  :hover {
-    background-color: lightgray;
-  }
-`;
-const SubYTh = styled.th`
-  border: solid 2px lightgray;
-  text-align: center;
-  background-color: ${({ selected }: ExtraThProps) =>
-    selected ? "dimgray" : undefined};
+    selected ? "dimgray" : "white"};
   color: ${({ selected }: ExtraThProps) =>
     selected ? "white" : undefined};
   cursor: pointer;
   :hover {
     background-color: lightgray;
   }
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+`;
+const SubYTh = styled.div`
+  text-align: center;
+  background-color: ${({ selected }: ExtraThProps) =>
+    selected ? "dimgray" : "white"};
+  color: ${({ selected }: ExtraThProps) =>
+    selected ? "white" : undefined};
+  cursor: pointer;
+  :hover {
+    background-color: lightgray;
+  }
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
 `;
 type ExtraTdProps = {
   selected?: boolean;
 };
-const Td = styled.td`
-  border: solid 2px lightgray;
+const CellStyled = styled.div`
   text-align: end;
   background-color: ${({ selected }: ExtraTdProps) =>
-    selected ? "dimgray" : undefined};
+    selected ? "dimgray" : "white"};
   color: ${({ selected }: ExtraThProps) =>
     selected ? "white" : undefined};
   cursor: pointer;
   :hover {
     background-color: lightgray;
   }
+  width: 100%;
+  height: 100%;
 `;
-const Table = (props: any) => (
-  <div
-    css={css`
-      overflow-x: scroll;
-      width: 100%;
-      height: 50vh;
-    `}
-  >
-    <table
-      css={css`
-        position: relative;
-        width: 800px;
-        border-collapse: collapse;
-      `}
-      {...props}
-    >
-      {props.children}
-    </table>
-  </div>
-);
-const Tr = styled.tr``;
 
 export const Cell = observer(
   ({
@@ -108,7 +96,7 @@ export const Cell = observer(
     });
 
     return (
-      <Td
+      <CellStyled
         selected={
           placement == pageState.placement &&
           killPoint == pageState.killPoint
@@ -116,12 +104,12 @@ export const Cell = observer(
         onClick={handleClick}
       >
         {rp}
-      </Td>
+      </CellStyled>
     );
   }
 );
 
-export const ColumnHeader = observer(
+export const XHeader = observer(
   ({ placement }: { placement: number }) => {
     const pageState = useContext(PageStateContext);
 
@@ -131,7 +119,6 @@ export const ColumnHeader = observer(
 
     return (
       <SubXTh
-        scope="col"
         onClick={handleClick}
         selected={placement == pageState.placement}
       >
@@ -140,7 +127,7 @@ export const ColumnHeader = observer(
     );
   }
 );
-export const RowHeader = observer(
+export const YHeader = observer(
   ({ killPoint }: { killPoint: number }) => {
     const pageState = useContext(PageStateContext);
 
@@ -150,7 +137,6 @@ export const RowHeader = observer(
 
     return (
       <SubYTh
-        scope="row"
         onClick={handleClick}
         selected={killPoint == pageState.killPoint}
       >
@@ -163,48 +149,26 @@ type Props = {
   tier: Tier;
   lostForgiveness: boolean;
 };
-export function SmallReport({
-  tier,
-  lostForgiveness,
-}: Props) {
+export function SmallReport({}: Props) {
   const { t } = useTranslation();
-
+  const vw = document.body.clientWidth;
   return (
-    <TwoDTableLayout
-      caption={() => (
-        <caption>
-          {lostForgiveness
-            ? t("RP for {{tier}} with lost forgiveness", {
-                tier: t(tier),
-              })
-            : t("RP for {{tier}}", { tier: t(tier) })}
-        </caption>
+    <ScrollableTable 
+      viewport={[vw, 532]}
+      borderColor="lightgray"
+      xs={range(20, 1)}
+      ys={range(13, 0)}
+      xCaption={(props) => (
+        <XCaption {...props}>{t("Placement")}</XCaption>
       )}
-      axises={{
-        x: {
-          label: (props) => (
-            <XTitleTh {...props}>{t("Placement")}</XTitleTh>
-          ),
-          values: range(20, 1),
-          header: (a) => (
-            <ColumnHeader placement={a.value} />
-          ),
-        },
-        y: {
-          label: (props) => (
-            <YTitleTh {...props}>
-              {t("Kill/Assist Points")}
-            </YTitleTh>
-          ),
-          values: range(13, 0),
-          header: (a) => <RowHeader killPoint={a.value} />,
-        },
-      }}
-      cell={({ x, y }) => {
-        return <Cell placement={x} killPoint={y} />;
-      }}
-      Table={(props: any) => <Table {...props} />}
-      Tr={(props: any) => <Tr {...props} />}
+      yCaption={(props) => (
+        <YCaption {...props}>
+          {t("Kill/Assist Points")}
+        </YCaption>
+      )}
+      xHeader={(x) => <XHeader placement={x} />}
+      yHeader={(y) => <YHeader killPoint={y} />}
+      cell={(x, y) => <Cell placement={x} killPoint={y} />}
     />
   );
 }
