@@ -9,12 +9,14 @@ export function Sticky3x3({
   innerWidth,
   innerHeight,
   cells,
+  cellBackgroundColors: cellConfigs,
 }: {
   width: number;
   height: number;
   innerWidth: Vec3<number>;
   innerHeight: Vec3<number>;
   cells: Vec3<Vec3<ReactNode>>;
+  cellBackgroundColors: Vec3<Vec3<string | null>>;
 }) {
   const totalInnerWidth =
     innerWidth[0] + innerWidth[1] + innerWidth[2];
@@ -25,12 +27,14 @@ export function Sticky3x3({
       css={css`
         width: ${innerWidth[x]}px;
         height: ${innerHeight[y]}px;
-        background-color: rgba(
+        background-color: ${cellConfigs[y][x] !== null
+          ? cellConfigs[y][x]
+          : `rgba(
           ${x * 127},
           ${y * 127},
           ${255 - y * 127},
           1
-        );
+        )`};
         order: ${x + y * 3};
         position: sticky;
         ${y == 0 ? "top: 0;" : ""}

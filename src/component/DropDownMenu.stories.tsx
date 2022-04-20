@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ComponentStory,
   ComponentMeta,
 } from "@storybook/react";
 
 import { DropDownMenu } from "./DropDownMenu";
+import { observable } from "mobx";
+import { Observer } from "mobx-react-lite";
 
 export default {
   component: DropDownMenu,
@@ -19,11 +21,13 @@ export default {
 const Template: ComponentStory<typeof DropDownMenu> = (
   args
 ) => {
-  const selected = useState<string>("1");
+  const selected = useMemo(() => observable.box(1), []);
   return (
     <div>
-      <div>{"" + selected[0]}</div>
-      <DropDownMenu {...args} selected={selected as any} />
+      <Observer>
+        {() => <div>{"" + selected.get()}</div>}
+      </Observer>
+      <DropDownMenu {...args} selected={selected} />
     </div>
   );
 };

@@ -1,39 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react/macro";
-import { useState } from "react";
 import { ReactNode } from "react";
-import { FakeStickyDiv } from "./useFakeSticky";
-type Vec2 = [number, number];
+import { Sticky3x3 } from "./Sticky3x3";
 
-function Container({
-  viewport,
-  children,
-}: {
-  viewport: Vec2;
-  children: (innerSize: Vec2) => ReactNode;
-}) {
-  const [divElement, setDivElement] =
-    useState<HTMLDivElement | null>(null);
-  return (
-    <div
-      css={css`
-        position: relative;
-        width: ${viewport[0]}px;
-        height: ${viewport[1]}px;
-        border: 2px solid lightgray;
-        overflow: scroll;
-        box-sizing: border-box;
-      `}
-      ref={(div) => div && setDivElement(div)}
-    >
-      {divElement &&
-        children([
-          divElement.clientWidth ?? 0,
-          divElement.clientHeight ?? 0,
-        ])}
-    </div>
-  );
-}
+export type Config = {
+  height: number;
+  width: number;
+};
+type Vec2<T> = [T, T];
+type Vec3<T> = [T, T, T];
 
 // x * y
 // w * h
@@ -47,161 +22,234 @@ export function ScrollableTable<X, Y>({
   borderColor = "pink",
   xs = [],
   ys = [],
-  xCaption = () => "X",
-  yCaption = () => "Y",
-  xHeader = (x) => x,
-  yHeader = (y) => y,
-  cell = (x, y) => `${x} ${y}`,
+  xCaption = (config: Config) => "X",
+  yCaption = (config: Config) => "Y",
+  xHeader = (x, config: Config) => x,
+  yHeader = (y, config: Config) => y,
+  cell = (x, y, config: Config) => `${x} ${y}`,
 }: {
-  viewport?: Vec2;
-  headerSize?: Vec2;
-  cellSize?: Vec2;
+  viewport?: Vec2<number>;
+  headerSize?: Vec2<number>;
+  cellSize?: Vec2<number>;
   colCaptionHeight?: number;
   borderColor?: string;
   gap?: number;
   headerGap?: number;
   xs?: X[];
   ys?: Y[];
-  xCaption?: () => ReactNode;
-  yCaption?: () => ReactNode;
-  xHeader?: (x: X) => ReactNode;
-  yHeader?: (y: Y) => ReactNode;
-  cell?: (x: X, y: Y) => ReactNode;
+  xCaption?: (config: Config) => ReactNode;
+  yCaption?: (config: Config) => ReactNode;
+  xHeader?: (x: X, config: Config) => ReactNode;
+  yHeader?: (y: Y, config: Config) => ReactNode;
+  cell?: (x: X, y: Y, config: Config) => ReactNode;
 }) {
-  const xHeaderSize = [
-    cellSize[0],
-    headerSize[1] - colCaptionHeight - headerGap,
-  ];
+  const width = [
+    gap + headerSize[0] + headerGap,
+    cellSize[0] * xs.length + gap * (xs.length - 1),
+    gap,
+  ] as Vec3<number>;
+  const height = [
+    gap + headerSize[1] + headerGap,
+    cellSize[1] * ys.length + gap * (ys.length - 1),
+    gap,
+  ] as Vec3<number>;
+
   return (
-    <Container viewport={viewport}>
-      {(innerSize) => (
-        <>
-          <FakeStickyDiv
-            left={[0, "sticky"]}
-            top={[0, "sticky"]}
-            css={css`
-              z-index: 3;
-            `}
-          >
-            <div
-              css={css`
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: ${headerSize[0]}px;
-                height: ${headerSize[1]}px;
-                border-style: solid;
-                border-width: ${gap}px ${headerGap}px
-                  ${headerGap}px ${gap}px;
-                border-color: ${borderColor};
-                background-color: white;
-              `}
-            >
-              {yCaption()}
-            </div>
-            <div
-              css={css`
-                position: absolute;
-                left: ${headerSize[0] + gap}px;
-                top: 0;
-                width: ${innerSize[0] -
-                headerSize[0] -
-                headerGap -
-                gap * 2}px;
-                height: ${colCaptionHeight}px;
-                border-style: solid;
-                border-width: ${gap}px ${gap}px
-                  ${headerGap}px ${headerGap}px;
-                border-color: ${borderColor};
-                background-color: white;
-              `}
-            >
-              {xCaption()}
-            </div>
-          </FakeStickyDiv>
-          <FakeStickyDiv
-            left={[headerSize[0] + headerGap, "absolute"]}
-            top={[colCaptionHeight, "sticky"]}
-            css={css`
-              z-index: 2;
-            `}
-          >
-            {xs.map((x, index) => (
-              <div
-                css={css`
-                  position: absolute;
-                  left: ${(xHeaderSize[0] + gap) * index}px;
-                  top: 0;
-                  width: ${xHeaderSize[0]}px;
-                  height: ${headerSize[1] -
-                  colCaptionHeight -
-                  headerGap +
-                  gap}px;
-                  border-style: solid;
-                  border-width: ${headerGap}px ${gap}px;
-                  border-color: ${borderColor};
-                  background-color: white;
-                `}
-              >
-                {xHeader(x)}
-              </div>
-            ))}
-          </FakeStickyDiv>
-          <FakeStickyDiv
-            left={[0, "sticky"]}
-            top={[headerSize[1] + headerGap, "absolute"]}
-            css={css`
-              z-index: 2;
-            `}
-          >
-            {ys.map((y, index) => (
-              <div
-                css={css`
-                  position: absolute;
-                  left: 0;
-                  top: ${(cellSize[1] + gap) * index}px;
-                  width: ${headerSize[0]}px;
-                  height: ${cellSize[1]}px;
-                  border-style: solid;
-                  border-width: ${gap}px ${headerGap}px
-                    ${gap}px ${gap}px;
-                  border-color: ${borderColor};
-                  background-color: white;
-                `}
-              >
-                {yHeader(y)}
-              </div>
-            ))}
-          </FakeStickyDiv>
+    <Sticky3x3
+      width={viewport[0]}
+      height={viewport[1]}
+      innerWidth={width}
+      innerHeight={height}
+      cells={[
+        [
           <div
             css={css`
-              position: absolute;
-              left: ${headerSize[0] + headerGap}px;
-              top: ${headerSize[1] + headerGap}px;
-              z-index: 1;
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: ${gap}px ${headerGap}px
+                ${headerGap}px ${gap}px;
+              width: ${headerSize[0]}px;
+              height: ${headerSize[1]}px;
+              position: relative;
             `}
           >
-            {xs.map((x, xIndex) =>
-              ys.map((y, yIndex) => (
+            {yCaption({
+              width: headerSize[0],
+              height: headerSize[1],
+            })}
+            <div
+              css={css`
+                border-style: solid;
+                border-color: ${borderColor};
+                border-width: ${gap}px 0 ${headerGap}px 0;
+                width: ${width[1]}px;
+                height: ${colCaptionHeight}px;
+                position: absolute;
+                top: ${-gap}px;
+                left: ${headerSize[0] + headerGap}px;
+              `}
+            >
+              {xCaption({
+                width: width[1],
+                height: colCaptionHeight,
+              })}
+            </div>
+          </div>,
+          <div
+            css={css`
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: 0 0 ${headerGap}px 0;
+              margin-top: ${gap +
+              colCaptionHeight +
+              headerGap}px;
+            `}
+          >
+            <div
+              css={css`
+                display: flex;
+                height: ${headerSize[1] -
+                colCaptionHeight -
+                headerGap}px;
+              `}
+            >
+              {xs.map((x) => (
                 <div
                   css={css`
-                    position: absolute;
-                    left: ${(cellSize[0] + gap) * xIndex}px;
-                    top: ${(cellSize[1] + gap) * yIndex}px;
+                    :not(:last-child) {
+                      border-style: solid;
+                      border-color: ${borderColor};
+                      border-width: 0 ${gap}px 0 0;
+                    }
                     width: ${cellSize[0]}px;
-                    height: ${cellSize[1]}px;
-                    border: ${gap}px solid ${borderColor};
-                    background-color: white;
-                    overflow: hidden;
+                    height: ${headerSize[1] -
+                    colCaptionHeight -
+                    headerGap}px;
                   `}
                 >
-                  {cell(x, y)}
+                  {xHeader(x, {
+                    width: cellSize[0],
+                    height:
+                      headerSize[1] -
+                      colCaptionHeight -
+                      headerGap,
+                  })}
                 </div>
-              ))
-            )}
-          </div>
-        </>
-      )}
-    </Container>
+              ))}
+            </div>
+          </div>,
+          <div
+            css={css`
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: 0 ${gap}px 0 0;
+              height: ${height[0]}px;
+            `}
+          />,
+        ],
+        [
+          <div
+            css={css`
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: 0 ${headerGap}px 0 ${gap}px;
+              width: ${headerSize[0]}px;
+              height: ${cellSize[1] * ys.length +
+              gap * (ys.length - 1)}px;
+            `}
+          >
+            {ys.map((y) => (
+              <div
+                css={css`
+                  :not(:last-child) {
+                    border-style: solid;
+                    border-color: ${borderColor};
+                    border-width: 0 0 ${gap}px 0;
+                  }
+                  width: ${headerSize[0]}px;
+                  height: ${cellSize[1]}px;
+                `}
+              >
+                {yHeader(y, {
+                  width: headerSize[0],
+                  height: cellSize[1],
+                })}
+              </div>
+            ))}
+          </div>,
+          <div>
+            {ys.map((y) => (
+              <div
+                css={css`
+                  display: flex;
+                `}
+              >
+                {xs.map((x) => (
+                  <div
+                    css={css`
+                      border-style: solid;
+                      border-color: ${borderColor};
+                      border-width: 0;
+                      :not(:last-child) {
+                        border-right-width: ${gap}px;
+                      }
+                      div:not(:last-child) > & {
+                        border-bottom-width: ${gap}px;
+                      }
+                      width: ${cellSize[0]}px;
+                      height: ${cellSize[1]}px;
+                    `}
+                  >
+                    {cell(x, y, {
+                      width: cellSize[0],
+                      height: cellSize[0],
+                    })}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>,
+          <div
+            css={css`
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: 0 ${gap}px 0 0;
+              height: ${height[1]}px;
+            `}
+          />,
+        ],
+        [
+          <div
+            css={css`
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: 0 0 ${gap}px 0;
+              width: ${width[0]}px;
+            `}
+          />,
+          <div
+            css={css`
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: 0 0 ${gap}px 0;
+              width: ${width[1]}px;
+            `}
+          />,
+          <div
+            css={css`
+              border-style: solid;
+              border-color: ${borderColor};
+              border-width: 0 0 ${gap}px 0;
+              width: ${width[2]}px;
+            `}
+          />,
+        ],
+      ]}
+      cellBackgroundColors={[
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+      ]}
+    />
   );
 }

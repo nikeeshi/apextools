@@ -75,9 +75,9 @@ const Table = (props: any) => (
   >
     <table
       css={css`
-  position: relative;
-  width: 800px;
-  border-collapse: collapse;
+        position: relative;
+        width: 800px;
+        border-collapse: collapse;
       `}
       {...props}
     >
