@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react/macro";
 import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { range } from "../util/range";
@@ -76,8 +75,8 @@ export const Cell = observer(
     return (
       <Td
         selected={
-          placement == pageState.placement &&
-          killPoint == pageState.killPoint
+          placement === pageState.placement &&
+          killPoint === pageState.killPoint
         }
         onClick={handleClick}
       >
@@ -99,7 +98,7 @@ export const ColumnHeader = observer(
       <SubTh
         scope="col"
         onClick={handleClick}
-        selected={placement == pageState.placement}
+        selected={placement === pageState.placement}
       >
         {placement}
       </SubTh>
@@ -118,7 +117,7 @@ export const RowHeader = observer(
       <SubTh
         scope="row"
         onClick={handleClick}
-        selected={killPoint == pageState.killPoint}
+        selected={killPoint === pageState.killPoint}
       >
         {killPoint}
       </SubTh>

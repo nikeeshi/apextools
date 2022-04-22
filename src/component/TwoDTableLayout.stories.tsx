@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react/macro";
 import styled from "@emotion/styled/macro";
 import { ComponentMeta } from "@storybook/react";
 import {

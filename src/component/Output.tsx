@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react/macro";
 import { useMediaQuery } from "@react-hook/media-query";
 import { useTranslation } from "react-i18next";
 import { Tier } from "../data";

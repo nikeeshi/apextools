@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react/macro";
 import { createContext, useMemo } from "react";
 import { Tier, Tiers } from "../data";
 import { Header } from "./Header";

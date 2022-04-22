@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from "@emotion/react/macro";
+import { css } from "@emotion/react/macro";
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import { ReactNode } from "react";

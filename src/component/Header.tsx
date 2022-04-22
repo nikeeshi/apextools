@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react/macro";
 import { useTranslation } from "react-i18next";
 import mq from "../mediaQuery";
 import LanguageSwitch from "./LanguageSwitch";

@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react/macro";
 import { action, IObservableValue } from "mobx";
 import { Observer } from "mobx-react-lite";
 

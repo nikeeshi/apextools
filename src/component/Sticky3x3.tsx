@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from "@emotion/react/macro";
+import { css } from "@emotion/react/macro";
 import { forwardRef, ReactNode, Ref } from "react";
 
 type Vec3<T> = [T, T, T];
@@ -41,10 +41,10 @@ export const Sticky3x3 = forwardRef(
             : ""}
           order: ${x + y * 3};
           position: sticky;
-          ${y == 0 ? "top: 0;" : ""}
-          ${y == 2 ? "bottom: 0;" : ""}
-        ${x == 0 ? "left: 0;" : ""}
-        ${x == 2 ? "right: 0;" : ""}
+          ${y === 0 ? "top: 0;" : ""}
+          ${y === 2 ? "bottom: 0;" : ""}
+        ${x === 0 ? "left: 0;" : ""}
+        ${x === 2 ? "right: 0;" : ""}
         `}
       >
         {cells[y][x]}
