@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/react/macro";
 import { useState } from "react";
 import { ReactNode } from "react";
-import { FakeStickyDiv } from "../useFakeSticky";
+import { FakeStickyDiv } from "./useFakeSticky";
 type Vec2 = [number, number];
 
 function Container({

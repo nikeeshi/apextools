@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css, jsx } from "@emotion/react/macro";
-import { entries } from "mobx";
 import { useEffect, useMemo } from "react";
-import { useCallback } from "react";
 import { useState } from "react";
-import { createRef, ReactNode } from "react";
+import { ReactNode } from "react";
 import { Sticky3x3 } from "./Sticky3x3";
 
 export type Config = {

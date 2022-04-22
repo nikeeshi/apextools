@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from "@emotion/react/macro";
+import { jsx } from "@emotion/react/macro";
 import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { range } from "../util/range";
