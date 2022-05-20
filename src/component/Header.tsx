@@ -13,7 +13,7 @@ export function Header() {
           display: "inline-block",
         })}
       >
-        {t("Apex Legends RP calculator")}
+        {t("Apex Legends RP calculator (Outdated)")}
       </h1>
       <div
         css={mq({
